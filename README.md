@@ -1,69 +1,100 @@
-# 📘 Laravel Interview Plan
+# 📘 Laravel Study - Day 1: Basics & Routing
 
-This repository contains a 15-day structured Laravel interview preparation plan.
+## ✅ Topics Covered
 
----
-
-## 📅 Day 1 - Laravel Request Lifecycle & Route Types
-
-### 🔁 Laravel Request Lifecycle (Overview)
-
-When a user visits your Laravel application in the browser, here’s what happens step-by-step:
-
-1. **🔗 Browser Sends Request**  
-   The user opens a URL, and the browser sends a request to your Laravel app.
-
-2. **🚪 Entry Point – `public/index.php`**  
-   This is the front controller — every request starts here.
-
-3. **⚙️ HTTP Kernel – `App\Http\Kernel.php`**  
-   The kernel:
-
-   - Registers global and route middleware.
-   - Sends the request through middleware.
-
-4. **🛡 Middleware**  
-   Middleware filters the request (authentication, CSRF, etc.).
-
-5. **🧭 Routes**  
-   Laravel matches the request to a route in `routes/web.php` or `routes/api.php`.
-
-6. **📦 Controller Method**  
-   The matched controller method executes the application logic.
-
-7. **📨 Response**  
-   The response is sent back through middleware and kernel, then to the browser.
+- Laravel directory structure
+- `web.php` vs `api.php`
+- Basic route definitions (`get`, `post`, `any`)
+- Route parameters (required and optional)
+- Named routes
+- Route groups with middleware and prefix
 
 ---
 
-### 2. Route Types in Laravel
+## 🧠 Key Concepts
 
-Laravel organizes routes into two main files to separate web UI and API logic:
-
-#### a) `web.php` Routes
-
-- Used for **web interface** routes.
-- Supports **sessions**, **cookies**, and **CSRF protection**.
-- Middleware like `web` and `auth` typically applied.
-
-Example:
+### ➤ Basic Route
 
 ```php
-// routes/web.php
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+Route::get('/hello', function () {
+    return 'Hello, Laravel!';
+});
 ```
 
-#### b) `api.php` Routes
-
-- Used for API endpoints only
-- Routes are stateless (no sessions or cookies).
-- Usually return JSON.
-- Middleware like api applied, includes throttling.
-
-Example:
+### ➤ Route With Parameter
 
 ```php
-// routes/api.php
-Route::get('/products', [Api\ProductController::class, 'index']);
+Route::get('/user/{id}', function ($id) {
+    return "User ID: $id";
+});
+
+```
+
+### ➤ Optional Parameter Parameter
+
+```php
+Route::get('/user/{name?}', function ($name = 'Guest') {
+    return "Hello, $name";
+});
+
+```
+
+### ➤ Route group with Prefix and middleware
+
+```php
+Route::prefix('admin')->middleware('auth')->group(function(){
+    Route::get('/users',[Usercontroller::class,index]);
+});
+```
+
+# 📘 Laravel Study - Day 2: Controllers & Views
+
+## ✅ Topics Covered
+
+- Creating controllers with Artisan
+- Defining controller methods
+- Routing to controllers
+- Returning views from controllers
+- Passing data to views
+- Using the `compact()` helper
+- Blade basics: displaying variables, loops
+
+---
+
+## 🧠 Key Concepts
+
+### ➤ Create Controller
+
+```bash
+php artisan make:controller ProductController
+
+```
+
+### ➤ Define Methods in Controller
+
+```bash
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+
+class ProductController extends Controller
+{
+    public function index() {
+        return view('products.index');
+    }
+
+    public function show($id) {
+        return "Product ID: " . $id;
+    }
+}
+```
+
+### ➤ Routing to Controller Methods
+
+```bash
+use App\Http\Controllers\ProductController;
+
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
 
 ```
