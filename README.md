@@ -136,3 +136,18 @@ public function category() {
 }
 
 ```
+
+(Many to Many)
+
+```bash
+// Product.php
+public function tags() {
+    return $this->belongsToMany(Tag::class);
+}
+
+// Tag.php
+public function products() {
+    return $this->belongsToMany(Product::class);
+}
+
+```
