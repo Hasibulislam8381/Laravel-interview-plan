@@ -98,3 +98,41 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 
 ```
+
+# 📘 Laravel Study - Day 3: Models, Migrations & Eloquent Relationships
+
+1.Create Model with Migration
+
+```bash
+php artisan make:model Product -m
+```
+
+2.Eloquent Relationships
+(One to One)
+
+```bash
+// User.php
+public function profile() {
+    return $this->hasOne(Profile::class);
+}
+
+// Profile.php
+public function user() {
+    return $this->belongsTo(User::class);
+}
+```
+
+(One to Many)
+
+```bash
+// Category.php
+public function products() {
+    return $this->hasMany(Product::class);
+}
+
+// Product.php
+public function category() {
+    return $this->belongsTo(Category::class);
+}
+
+```
