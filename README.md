@@ -1,14 +1,15 @@
 # Laravel Interview Prep: Day 1 to Day 4 – 15 Key Interview Questions & Answers
 
 ---
+
 ## Questions & Answers
 
 1. **What are Service Providers and the Service Container in Laravel?**  
    Service Container is like a warehouse that stores all the classes and their dependencies your app needs. Whenever your app requests a service, the container delivers it, assembling all required parts automatically.
 
-Service Providers are like the managers of this warehouse. They register and configure these services into the container, telling it what’s available and how to build them.
+   Service Providers are like the managers of this warehouse. They register and configure these services into the container, telling it what’s available and how to build them.
 
-Together, service providers prepare everything, and the service container delivers services when requested, enabling Laravel’s powerful dependency injection and bootstrapping system.
+   Together, service providers prepare everything, and the service container delivers services when requested, enabling Laravel’s powerful dependency injection and bootstrapping system.
 
 2. **How do you define a route that accepts parameters?**  
    `Route::get('/user/{id}', [UserController::class, 'show']);`
@@ -51,6 +52,14 @@ Together, service providers prepare everything, and the service container delive
 
 15. **How do you redirect a user with flash session data?**  
     `return redirect()->route('home')->with('success', 'Message');`
+16. **What is a Facade in Laravel**  
+    A Facade in Laravel provides a "static" interface to classes that are available in the service container.
+    In simple terms:
+    It’s just a shortcut or alias to access underlying complex classes or services — without needing to resolve them manually from the container.
+    Example:
+    Cache::put('key', 'value', 3600);
+    Log::info('Something happened');
+    Config::get('app.name');
 
 ---
 
