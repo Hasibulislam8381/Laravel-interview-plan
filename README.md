@@ -1,3 +1,61 @@
+# Laravel Interview Prep: Day 1 to Day 4 – 15 Key Interview Questions & Answers
+
+---
+## Questions & Answers
+
+1. **What are Service Providers and the Service Container in Laravel?**  
+   Service Container is like a warehouse that stores all the classes and their dependencies your app needs. Whenever your app requests a service, the container delivers it, assembling all required parts automatically.
+
+Service Providers are like the managers of this warehouse. They register and configure these services into the container, telling it what’s available and how to build them.
+
+Together, service providers prepare everything, and the service container delivers services when requested, enabling Laravel’s powerful dependency injection and bootstrapping system.
+
+2. **How do you define a route that accepts parameters?**  
+   `Route::get('/user/{id}', [UserController::class, 'show']);`
+
+3. **What is middleware and how do you apply it to a route?**  
+   Middleware filters HTTP requests; apply using `->middleware('auth')`.
+
+4. **How do you pass data from a controller to a Blade view?**  
+   Use `return view('view', ['data' => $data])` or `compact()` helper.
+
+5. **What is the difference between `@include` and `@extends` in Blade?**  
+   `@extends` sets a layout; `@include` embeds partial views.
+
+6. **How does Laravel handle CSRF protection?**  
+   Automatically via a CSRF token included with `@csrf` in forms.
+
+7. **What is the difference between `validate()` and `Validator::make()`?**  
+   `validate()` auto-redirects on fail; `Validator::make()` allows manual handling.
+
+8. **How do you customize the error messages returned by validation?**  
+   Pass a second argument array with custom messages to `validate()` or `Validator::make()`.
+
+9. **How do you display validation errors for a specific input in Blade?**  
+   Using `@error('field_name') {{ $message }} @enderror`.
+
+10. **What helper function is used to retain old input data after validation fails?**  
+    `old('input_name')`
+
+11. **What command creates a controller in Laravel?**  
+    `php artisan make:controller ControllerName`
+
+12. **How can you group routes and apply middleware to all of them?**  
+    Using `Route::middleware('auth')->group(function () { ... });`
+
+13. **Explain the difference between `GET` and `POST` HTTP methods in routing.**  
+    GET retrieves data; POST submits or changes data.
+
+14. **What happens if you forget to add `@csrf` in a POST form?**  
+    The request fails with a “419 Page Expired” CSRF token mismatch error.
+
+15. **How do you redirect a user with flash session data?**  
+    `return redirect()->route('home')->with('success', 'Message');`
+
+---
+
+Good luck with your interviews! 🚀
+
 # 📘 Laravel Study - Day 1: Basics & Routing
 
 ## ✅ Topics Covered
