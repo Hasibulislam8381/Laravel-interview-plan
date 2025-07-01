@@ -151,3 +151,83 @@ public function products() {
 }
 
 ```
+
+# 📘 Laravel Interview Prep – Day 4: Forms, Validation & Request Handling
+
+Welcome to **Day 4** of the 7-day Laravel interview prep plan! Today focuses on one of the most common real-world tasks: working with forms, validating data, and handling requests securely and efficiently.
+
+---
+
+## ✅ Topics Covered
+
+- Creating Forms in Blade
+- CSRF Protection
+- Handling Form Submissions
+- Request Object Usage
+- Data Validation (Inline & Manual)
+- Redirects with Old Input
+- Showing Validation Errors
+- Flash Messages (Success/Error)
+
+---
+
+## 🧠 Key Concepts
+
+### ➤ 1. Creating a Form in Blade
+
+In Laravel Blade, HTML forms should always include the CSRF token using `@csrf` to prevent Cross-Site Request Forgery attacks.
+
+```blade
+<!-- resources/views/product/create.blade.php -->
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+<form action="{{ route('store.product') }}" method="POST">
+    @csrf
+    <input type="text" name="name" placeholder="Product Name" value="{{ old('name') }}">
+    @error('name')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+
+    <input type="number" name="price" placeholder="Price" value="{{ old('price') }}">
+    @error('price')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+
+    <textarea name="description" placeholder="Description">{{ old('description') }}</textarea>
+
+    <button type="submit">Save</button>
+</form>
+
+**route**
+use App\Http\Controllers\ProductController;
+
+Route::get('/product/create', [ProductController::class, 'create'])->name('create.product');
+Route::post('/product/store', [ProductController::class, 'store'])->name('store.product');
+
+**Controller**
+public function store(Request $request)
+{
+    $request->validate([
+        'name'->'required',
+        'price->'required',
+        'description->'required',
+    ])
+
+}
+
+```
