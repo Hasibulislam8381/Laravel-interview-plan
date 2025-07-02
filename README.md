@@ -1,4 +1,4 @@
-# Laravel Interview Prep: Day 1 to Day 4 – 15 Key Interview Questions & Answers
+# Laravel Interview Prep: Interview Questions & Answers
 
 ---
 
@@ -60,6 +60,129 @@
     Cache::put('key', 'value', 3600);
     Log::info('Something happened');
     Config::get('app.name');
+
+**17. What is middleware in Laravel and how can you register it for specific routes?**
+**Answer:** Middleware acts as a filter for HTTP requests. You can register it in `app/Http/Kernel.php` under `$routeMiddleware`, and apply it like:
+
+```php
+Route::get('/admin', 'AdminController@index')->middleware('auth');
+```
+
+---
+
+**18. How do you create a custom middleware and assign parameters to it?**
+**Answer:**
+Create using:
+
+```bash
+php artisan make:middleware CheckRole
+```
+
+Assign parameters like:
+
+```php
+Route::get('/admin', 'AdminController@index')->middleware('check.role:admin');
+```
+
+Access in middleware via `$request->route()->parameter('role')`.
+
+---
+
+**19. What is the difference between global middleware and route middleware in Laravel?**
+**Answer:**
+
+- **Global middleware** runs on every request (defined in `$middleware`).
+- **Route middleware** only runs for specific routes (defined in `$routeMiddleware`).
+
+---
+
+**20. How does Laravel handle file uploads using the `Storage` facade?**
+**Answer:** Use:
+
+```php
+$request->file('avatar')->store('avatars');
+```
+
+or with public visibility:
+
+```php
+$request->file('avatar')->store('avatars', 'public');
+```
+
+---
+
+**21. What is the purpose of running `php artisan storage:link`?**
+**Answer:**
+It creates a symbolic link from `public/storage` to `storage/app/public`, allowing public access to stored files.
+
+---
+
+**22. How can you send notifications through multiple channels like mail and database in Laravel?**
+**Answer:**
+In your `Notification` class, define multiple methods like `toMail()` and `toDatabase()`. Laravel will send through all defined channels:
+
+```php
+public function via($notifiable)
+{
+    return ['mail', 'database'];
+}
+```
+
+---
+
+**23. What are the required steps to send an email notification in Laravel?**
+**Answer:**
+
+1. Create a notification:
+
+   ```bash
+   php artisan make:notification InvoicePaid
+   ```
+
+2. Define `toMail()` method inside the notification class.
+3. Send it:
+
+   ```php
+   $user->notify(new InvoicePaid($invoice));
+   ```
+
+---
+
+**24. What is the use of queues in Laravel and how do they improve performance?**
+**Answer:**
+Queues allow deferring time-consuming tasks (emails, processing) to background workers, improving response time and scalability.
+
+---
+
+**25. How do you dispatch a job to a queue and run the worker?**
+**Answer:**
+
+1. Create a job:
+
+   ```bash
+   php artisan make:job ProcessOrder
+   ```
+
+2. Dispatch it:
+
+   ```php
+   ProcessOrder::dispatch($order);
+   ```
+
+3. Run the queue worker:
+
+   ```bash
+   php artisan queue:work
+   ```
+
+---
+
+**26. What queue drivers are available in Laravel, and which one is best for production?**
+**Answer:**
+Available drivers: `sync`, `database`, `redis`, `beanstalkd`, `sqs`.
+**Redis** or **SQS** is recommended for production for better performance and reliability.
+
+---
 
 ---
 
