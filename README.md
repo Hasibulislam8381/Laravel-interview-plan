@@ -205,6 +205,13 @@ Gate::define('edit-settings', function ($user) {
 
 ---
 
+```php
+public function update(User $user, Post $post)
+{
+return $user->id === $post->user_id;
+}
+```
+
 ---
 
 # 📘 Laravel Study - Day 1: Basics & Routing
