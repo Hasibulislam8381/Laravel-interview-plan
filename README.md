@@ -182,11 +182,30 @@ Queues allow deferring time-consuming tasks (emails, processing) to background w
 Available drivers: `sync`, `database`, `redis`, `beanstalkd`, `sqs`.
 **Redis** or **SQS** is recommended for production for better performance and reliability.
 
----
+### 27. What are Policies and Gates in Laravel?
+
+Laravel provides two main ways to handle authorization: **Gates** and **Policies**.
+
+#### 🔐 Gates
+
+- Defined using closures inside `AuthServiceProvider`
+- Best for simple, general authorization logic
+
+```php
+Gate::define('edit-settings', function ($user) {
+    return $user->is_admin;
+});
+```
+
+#### 🔐 Policies
+
+-Organized in classes, typically per model
+-Each method corresponds to an action (view, create, update, delete)
+-Automatically resolved by Laravel for a given model
 
 ---
 
-Good luck with your interviews! 🚀
+---
 
 # 📘 Laravel Study - Day 1: Basics & Routing
 
